@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 12.0px 0.0px; font: 15.0px 'Helvetica Neue'; color: #1b1b1b}
+    p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 15.0px 'Helvetica Neue'; color: #1b1b1b; min-height: 17.0px}
+    p.p3 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Helvetica; color: #1b1b1b; min-height: 14.0px}
+    span.s1 {font: 15.0px '.Apple Color Emoji UI'}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;title&gt;Soccer League Manager&lt;/title&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">body{font-family:Arial;background:#f2f2f2;padding:10px}</p>
+<p class="p1">.container{max-width:1100px;margin:auto;background:#fff;padding:15px;border-radius:6px}</p>
+<p class="p1">h1,h2{text-align:center}</p>
+<p class="p1">input,button,select{padding:7px;margin:5px}</p>
+<p class="p1">button{cursor:pointer}</p>
+<p class="p1">table{width:100%;border-collapse:collapse;margin-top:10px}</p>
+<p class="p1">th,td{border:1px solid #ccc;padding:6px;text-align:center}</p>
+<p class="p1">th{background:#222;color:#fff}</p>
+<p class="p1">.section{margin-top:30px}</p>
+<p class="p1">@media(max-width:600px){table{font-size:12px}}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;div class="container"&gt;</p>
+<p class="p1">&lt;h1&gt;<span class="s1">⚽</span> Soccer League Manager&lt;/h1&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="section"&gt;</p>
+<p class="p1">&lt;h2&gt;Add Team&lt;/h2&gt;</p>
+<p class="p1">&lt;input id="teamName" placeholder="Team name"&gt;</p>
+<p class="p1">&lt;button onclick="addTeam()"&gt;Add Team&lt;/button&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="section"&gt;</p>
+<p class="p1">&lt;h2&gt;View Team Fixtures&lt;/h2&gt;</p>
+<p class="p1">&lt;select id="teamFilter" onchange="renderFixtures()"&gt;</p>
+<p class="p1">&lt;option value="all"&gt;All Teams&lt;/option&gt;</p>
+<p class="p1">&lt;/select&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="section"&gt;</p>
+<p class="p1">&lt;h2&gt;League Table&lt;/h2&gt;</p>
+<p class="p1">&lt;table&gt;</p>
+<p class="p1">&lt;thead&gt;</p>
+<p class="p1">&lt;tr&gt;</p>
+<p class="p1">&lt;th&gt;Team&lt;/th&gt;&lt;th&gt;P&lt;/th&gt;&lt;th&gt;W&lt;/th&gt;&lt;th&gt;D&lt;/th&gt;&lt;th&gt;L&lt;/th&gt;</p>
+<p class="p1">&lt;th&gt;GF&lt;/th&gt;&lt;th&gt;GA&lt;/th&gt;&lt;th&gt;Pts&lt;/th&gt;</p>
+<p class="p1">&lt;/tr&gt;</p>
+<p class="p1">&lt;/thead&gt;</p>
+<p class="p1">&lt;tbody id="table"&gt;&lt;/tbody&gt;</p>
+<p class="p1">&lt;/table&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="section"&gt;</p>
+<p class="p1">&lt;h2&gt;Fixtures &amp; Results&lt;/h2&gt;</p>
+<p class="p1">&lt;table&gt;</p>
+<p class="p1">&lt;thead&gt;</p>
+<p class="p1">&lt;tr&gt;&lt;th&gt;Home&lt;/th&gt;&lt;th&gt;Away&lt;/th&gt;&lt;th&gt;Score&lt;/th&gt;&lt;th&gt;Action&lt;/th&gt;&lt;/tr&gt;</p>
+<p class="p1">&lt;/thead&gt;</p>
+<p class="p1">&lt;tbody id="fixtures"&gt;&lt;/tbody&gt;</p>
+<p class="p1">&lt;/table&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">let teams=[],fixtures=[];</p>
+<p class="p2"><br></p>
+<p class="p1">function addTeam(){</p>
+<p class="p1">let n=teamName.value.trim();</p>
+<p class="p1">if(!n||teams.find(t=&gt;t.name===n))return;</p>
+<p class="p1">teams.push({name:n,P:0,W:0,D:0,L:0,GF:0,GA:0,PTS:0});</p>
+<p class="p1">teamName.value="";</p>
+<p class="p1">updateSelect();generateFixtures();renderTable();renderFixtures();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function updateSelect(){</p>
+<p class="p1">teamFilter.innerHTML="&lt;option value='all'&gt;All Teams&lt;/option&gt;";</p>
+<p class="p1">teams.forEach(t=&gt;{</p>
+<p class="p1">let o=document.createElement("option");</p>
+<p class="p1">o.value=t.name;o.textContent=t.name;</p>
+<p class="p1">teamFilter.appendChild(o);</p>
+<p class="p1">});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function generateFixtures(){</p>
+<p class="p1">fixtures=[];</p>
+<p class="p1">for(let i=0;i&lt;teams.length;i++)</p>
+<p class="p1">for(let j=i+1;j&lt;teams.length;j++){</p>
+<p class="p1">fixtures.push({h:teams[i].name,a:teams[j].name,hs:null,as:null});</p>
+<p class="p1">fixtures.push({h:teams[j].name,a:teams[i].name,hs:null,as:null});</p>
+<p class="p1">}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderTable(){</p>
+<p class="p1">table.innerHTML="";</p>
+<p class="p1">teams.sort((a,b)=&gt;b.PTS-a.PTS||(b.GF-b.GA)-(a.GF-a.GA));</p>
+<p class="p1">teams.forEach(t=&gt;{</p>
+<p class="p1">table.innerHTML+=`&lt;tr&gt;</p>
+<p class="p1">&lt;td&gt;${t.name}&lt;/td&gt;&lt;td&gt;${t.P}&lt;/td&gt;&lt;td&gt;${t.W}&lt;/td&gt;</p>
+<p class="p1">&lt;td&gt;${t.D}&lt;/td&gt;&lt;td&gt;${t.L}&lt;/td&gt;</p>
+<p class="p1">&lt;td&gt;${t.GF}&lt;/td&gt;&lt;td&gt;${t.GA}&lt;/td&gt;&lt;td&gt;${t.PTS}&lt;/td&gt;</p>
+<p class="p1">&lt;/tr&gt;`;</p>
+<p class="p1">});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderFixtures(){</p>
+<p class="p1">fixturesEl=fixturesEl||document.getElementById("fixtures");</p>
+<p class="p1">fixturesEl.innerHTML="";</p>
+<p class="p1">fixtures.filter(f=&gt;teamFilter.value==="all"||f.h===teamFilter.value||f.a===teamFilter.value)</p>
+<p class="p1">.forEach((f,i)=&gt;{</p>
+<p class="p1">fixturesEl.innerHTML+=`</p>
+<p class="p1">&lt;tr&gt;</p>
+<p class="p1">&lt;td&gt;${f.h}&lt;/td&gt;&lt;td&gt;${f.a}&lt;/td&gt;</p>
+<p class="p1">&lt;td&gt;&lt;input size=2 id=h${i} value="${f.hs??""}"&gt; -</p>
+<p class="p1">&lt;input size=2 id=a${i} value="${f.as??""}"&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;td&gt;&lt;button onclick="save(${i})"&gt;Save&lt;/button&gt;&lt;/td&gt;</p>
+<p class="p1">&lt;/tr&gt;`;</p>
+<p class="p1">});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function reset(){</p>
+<p class="p1">teams.forEach(t=&gt;Object.assign(t,{P:0,W:0,D:0,L:0,GF:0,GA:0,PTS:0}));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function save(i){</p>
+<p class="p1">let hs=parseInt(document.getElementById("h"+i).value),</p>
+<p class="p1">as=parseInt(document.getElementById("a"+i).value);</p>
+<p class="p1">if(isNaN(hs)||isNaN(as))return;</p>
+<p class="p1">fixtures[i].hs=hs;fixtures[i].as=as;</p>
+<p class="p1">reset();</p>
+<p class="p1">fixtures.forEach(f=&gt;{</p>
+<p class="p1">if(f.hs==null)return;</p>
+<p class="p1">let h=teams.find(t=&gt;t.name===f.h),</p>
+<p class="p1">a=teams.find(t=&gt;t.name===f.a);</p>
+<p class="p1">h.P++;a.P++;h.GF+=f.hs;h.GA+=f.as;a.GF+=f.as;a.GA+=f.hs;</p>
+<p class="p1">if(f.hs&gt;f.as){h.W++;h.PTS+=3;a.L++}</p>
+<p class="p1">else if(f.hs&lt;f.as){a.W++;a.PTS+=3;h.L++}</p>
+<p class="p1">else{h.D++;a.D++;h.PTS++;a.PTS++}</p>
+<p class="p1">});</p>
+<p class="p1">renderTable();</p>
+<p class="p1">}</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+<p class="p3"><br></p>
+</body>
+</html>
